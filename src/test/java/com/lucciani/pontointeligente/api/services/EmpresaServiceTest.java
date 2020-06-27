@@ -32,7 +32,7 @@ public class EmpresaServiceTest {
 	
 	private static final String CNPJ = "51463645000100";
 	
-	@Before
+	@Before 
 	public void setUp() {
 		BDDMockito.given(this.empresaRepository.findByCnpj(Mockito.anyString())).willReturn(new Empresa());
 		BDDMockito.given(this.empresaRepository.save(Mockito.any(Empresa.class))).willReturn(new Empresa());

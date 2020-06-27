@@ -30,7 +30,7 @@ public class FuncionarioServiceTest {
 	@Autowired
 	private FuncionarioService funcionarioService;
 	
-	@Before
+	@Before 
 	public void setUp() {
 		BDDMockito.given(this.funcionarioRepository.save(Mockito.any(Funcionario.class))).willReturn(new Funcionario());
 		BDDMockito.given(this.funcionarioRepository.findById(Mockito.anyLong())).willReturn(Optional.of(new Funcionario()));

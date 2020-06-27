@@ -73,20 +73,20 @@ public class LancamentoControllerTest {
 				.andExpect(jsonPath("$.errors").isEmpty());
 	}
 	
-//	@Test
-//	@WithMockUser
-//	public void testCadastrarLancamentoFuncionarioIdInvalido() throws Exception {
-//		BDDMockito.given(this.funcionarioService.buscarPorId(Mockito.anyLong())).willReturn(Optional.empty());
-//
-//		mvc.perform(MockMvcRequestBuilders.post(URL_BASE)
-//				.content(this.obterJsonRequisicaoPost())
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isBadRequest())
-//				.andExpect(jsonPath("$.data").isEmpty())
-//				.andExpect(jsonPath("$.errors").value("Funcionário não encontrado. ID inexistente."));
-//				
-//	}
+	@Test
+	@WithMockUser
+	public void testCadastrarLancamentoFuncionarioIdInvalido() throws Exception {
+		BDDMockito.given(this.funcionarioService.buscarPorId(Mockito.anyLong())).willReturn(Optional.empty());
+
+		mvc.perform(MockMvcRequestBuilders.post(URL_BASE)
+				.content(this.obterJsonRequisicaoPost())
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errors").isNotEmpty())
+				.andExpect(jsonPath("$.data").isEmpty());
+				
+	}
 	
 	@Test
 	@WithMockUser(username = "admin@admin.com", roles = {"ADMIN"})
@@ -98,15 +98,15 @@ public class LancamentoControllerTest {
 				.andExpect(status().isOk());
 	}
 	
-//	@Test
-//	@WithMockUser
-//	public void testRemoverLancamentoAcessoNegado() throws Exception {
-//		BDDMockito.given(this.lancamentoService.buscarPorId(Mockito.anyLong())).willReturn(Optional.of(new Lancamento()));
-//
-//		mvc.perform(MockMvcRequestBuilders.delete(URL_BASE + ID_LANCAMENTO)
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isForbidden());
-//	}
+	@Test
+	@WithMockUser
+	public void testRemoverLancamentoAcessoNegado() throws Exception {
+		BDDMockito.given(this.lancamentoService.buscarPorId(Mockito.anyLong())).willReturn(Optional.of(new Lancamento()));
+
+		mvc.perform(MockMvcRequestBuilders.delete(URL_BASE + ID_LANCAMENTO)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isForbidden());
+	}
 
 	private String obterJsonRequisicaoPost() throws JsonProcessingException {
 		LancamentoDto lancamentoDto = new LancamentoDto();
